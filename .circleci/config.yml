@@ -1,39 +1,26 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-orbs:
-  python: circleci/python@2.0.3
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build-and-test-python:
+  say-hello:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/python:3.10.4
+      - image: cimg/base:stable
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
       - run:
-          name: Run tests
-          command: pytest
-      - run:
-          name: current directory
-          command: pwd
-  build-and-test-javascript:
-     
-     docker:
-       - image: cimg/node:14.20.0
-     steps:
-       - checkout
-       - run:
-           name: install dependencies
-           command: cd test_javascript && npm install
-      
-       - run:
-           name: run tests
-           command: cd test_javascript && npm run test
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  sample:
+  say-hello-workflow:
     jobs:
-      - build-and-test-python:
-          filters:
-            branches:
-              only:
-                - master
-      - build-and-test-javascript
+      - say-hello
