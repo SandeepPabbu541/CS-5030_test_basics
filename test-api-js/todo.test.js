@@ -39,5 +39,23 @@ describe("todo test suite", () => {
     expect(answer).toBe(true);
     expect(todo_service.get_todos().todo.length).toEqual(3);
   });
+
+  test("Updating a todo and verifying it", () => {
+    expect(todo_service.get_todos().todo.length).toEqual(3);
+    answer = todo_service.update_todo("T3", {
+      title: "T45",
+      description: "D45",
+      done: false,
+    });
+    expect(answer).toBe(true);
+    all_todos = todo_service.get_todos().todo;
+    let value_found = false;
+    for (var i = 0; i < all_todos.length; i++) {
+      value_found = all_todos[i].title === "T45";
+      if (value_found === true) break;
+    }
+    expect(value_found).toBe(true);
+  });
+
   
 });
