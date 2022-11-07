@@ -32,4 +32,12 @@ describe("todo test suite", () => {
     }
     expect(value_found).toBe(true);
   });
+
+  test("Deleting a todo from list and verifying it", () => {
+    expect(todo_service.get_todos().todo.length).toEqual(4);
+    answer = todo_service.delete_todo("T4");
+    expect(answer).toBe(true);
+    expect(todo_service.get_todos().todo.length).toEqual(3);
+  });
+  
 });
